@@ -21,6 +21,7 @@ message BookingStatusID {
 message BookingStatus {
   int32 id           = 1; /// Unique booking status ID.
   string description = 2; /// Booking status description. E.g. "Active".
+  int64 reserved     = 3; /// @exclude reserved for future use
 }
 
 /**
@@ -40,8 +41,17 @@ message Booking {
   bool payment_received = 5;
 }
 
+/// @exclude
 // An empty message for testing
 message EmptyBookingMessage {
+}
+
+// This should not appear
+message NoCommentMessage {
+  /** commented */
+  bool payment_received = 1;
+  bool payment_sent = 2; // not shown
+  bool payment_accepted = 3; /// shown
 }
 
 /**

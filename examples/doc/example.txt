@@ -58,9 +58,20 @@ Represents the booking status ID.
 
 
 
-=== EmptyBookingMessage
-An empty message for testing
+=== NoCommentMessage
 
+
+
+|===========================================
+|*Field* |*Type* |*Label* |*Description*
+
+|payment_received | <<bool,bool>> | |commented
+
+|payment_sent | <<bool,bool>> | |
+
+|payment_accepted | <<bool,bool>> | |shown
+
+|===========================================
 
 
 

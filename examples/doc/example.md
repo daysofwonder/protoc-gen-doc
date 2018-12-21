@@ -7,7 +7,7 @@
     - [Booking](#com.example.Booking)
     - [BookingStatus](#com.example.BookingStatus)
     - [BookingStatusID](#com.example.BookingStatusID)
-    - [EmptyBookingMessage](#com.example.EmptyBookingMessage)
+    - [NoCommentMessage](#com.example.NoCommentMessage)
   
   
   
@@ -100,10 +100,17 @@ Represents the booking status ID.
 
 
 
-<a name="com.example.EmptyBookingMessage"></a>
+<a name="com.example.NoCommentMessage"></a>
 
-### EmptyBookingMessage
-An empty message for testing
+### NoCommentMessage
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| payment_received | [bool](#bool) |  | commented |
+| payment_sent | [bool](#bool) |  |  |
+| payment_accepted | [bool](#bool) |  | shown |
 
 
 

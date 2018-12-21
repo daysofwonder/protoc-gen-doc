@@ -24,8 +24,8 @@ message BookingStatus {
    * A flag for the status result.
    */
   enum StatusCode {
-    OK          = 200; // OK result.
-    BAD_REQUEST = 400; // BAD result.
+    OK          = 200; /// OK result.
+    BAD_REQUEST = 400; /// BAD result.
   }
 
   required int32 id               = 1; /// Unique booking status ID.
@@ -67,6 +67,6 @@ message Booking {
   // Nested extentions are also a thing.
 
   extend BookingStatus {
-    optional string optional_field_1 = 101; // An optional field to be used however you please.
+    optional string optional_field_1 = 101; /// An optional field to be used however you please.
   }
 }

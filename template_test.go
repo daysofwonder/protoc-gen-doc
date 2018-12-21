@@ -212,8 +212,22 @@ func (assert *TemplateTest) TestServiceMethodProperties() {
 	assert.Equal(false, method.ResponseStreaming)
 }
 
-func (assert *TemplateTest) TestExcludedComments() {
+func (assert *TemplateTest) TestExcludedMessage() {
 	message := findMessage("ExcludedMessage", vehicleFile)
+	assert.Nil(message)
+}
+
+func (assert *TemplateTest) TestExcludedField() {
+	message := findMessage("ExcludedField", vehicleFile)
+	assert.Nil(findField("name", message))
+	assert.Nil(findField("value", message))
+
+	// just checking that it doesn't exclude everything
+	assert.Equal("the id of this message.", findField("id", message).Description)
+}
+
+func (assert *TemplateTest) TestNonDocComment() {
+	message := findMessage("NonDocComment", vehicleFile)
 	assert.Empty(message.Description)
 	assert.Empty(findField("name", message).Description)
 	assert.Empty(findField("value", message).Description)

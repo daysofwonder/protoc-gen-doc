@@ -146,9 +146,51 @@
       
     </section>
     
-    <section id="com.example.EmptyBookingMessage">
-      <title>EmptyBookingMessage</title>
-      <para>An empty message for testing</para>
+    <section id="com.example.NoCommentMessage">
+      <title>NoCommentMessage</title>
+      <para></para>
+      
+      <table frame="all">
+        <title><classname>NoCommentMessage</classname> Fields</title>
+        <tgroup cols="4">
+          <colspec colwidth="*"/>
+          <colspec colwidth="*"/>
+          <colspec colwidth="0.5*"/>
+          <colspec colwidth="3*"/>
+          <thead>
+            <row>
+              <entry>Field</entry>
+              <entry>Type</entry>
+              <entry>Label</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+            <row>
+              <entry>payment_received</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>commented</para></entry>
+            </row>
+            
+            <row>
+              <entry>payment_sent</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para></para></entry>
+            </row>
+            
+            <row>
+              <entry>payment_accepted</entry>
+              <entry><link linkend="bool">bool</link></entry>
+              <entry></entry>
+              <entry><para>shown</para></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
       
       
     </section>

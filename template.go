@@ -39,7 +39,9 @@ func NewTemplate(descs []*protokit.FileDescriptor) *Template {
 		}
 
 		for _, e := range f.Enums {
-			file.Enums = append(file.Enums, parseEnum(e))
+			if !excluded(e.GetComments().String()) {
+				file.Enums = append(file.Enums, parseEnum(e))
+			}
 		}
 
 		for _, e := range f.Extensions {
@@ -47,19 +49,27 @@ func NewTemplate(descs []*protokit.FileDescriptor) *Template {
 		}
 
 		for _, m := range f.Messages {
-			file.Messages = append(file.Messages, parseMessage(m))
+			if !excluded(m.GetComments().String()) {
+				file.Messages = append(file.Messages, parseMessage(m))
 
-			for _, n := range m.Messages {
-				file.Messages = append(file.Messages, parseMessage(n))
-			}
+				for _, n := range m.Messages {
+					if !excluded(n.GetComments().String()) {
+						file.Messages = append(file.Messages, parseMessage(n))
+					}
+				}
 
-			for _, e := range m.Enums {
-				file.Enums = append(file.Enums, parseEnum(e))
+				for _, e := range m.Enums {
+					if !excluded(e.GetComments().String()) {
+						file.Enums = append(file.Enums, parseEnum(e))
+					}
+				}
 			}
 		}
 
 		for _, s := range f.Services {
-			file.Services = append(file.Services, parseService(s))
+			if !excluded(s.GetComments().String()) {
+				file.Services = append(file.Services, parseService(s))
+			}
 		}
 
 		sort.Sort(file.Enums)
@@ -225,11 +235,13 @@ func parseEnum(pe *protokit.EnumDescriptor) *Enum {
 	}
 
 	for _, val := range pe.GetValues() {
-		enum.Values = append(enum.Values, &EnumValue{
-			Name:        val.GetName(),
-			Number:      fmt.Sprint(val.GetNumber()),
-			Description: description(val.GetComments().String()),
-		})
+		if !excluded(val.GetComments().String()) {
+			enum.Values = append(enum.Values, &EnumValue{
+				Name:        val.GetName(),
+				Number:      fmt.Sprint(val.GetNumber()),
+				Description: description(val.GetComments().String()),
+			})
+		}
 	}
 
 	return enum
@@ -268,11 +280,15 @@ func parseMessage(pm *protokit.Descriptor) *Message {
 	}
 
 	for _, ext := range pm.Extensions {
-		msg.Extensions = append(msg.Extensions, parseMessageExtension(ext))
+		if !excluded(ext.GetComments().String()) {
+			msg.Extensions = append(msg.Extensions, parseMessageExtension(ext))
+		}
 	}
 
 	for _, f := range pm.Fields {
-		msg.Fields = append(msg.Fields, parseMessageField(f))
+		if !excluded(f.GetComments().String()) {
+			msg.Fields = append(msg.Fields, parseMessageField(f))
+		}
 	}
 
 	return msg
@@ -323,7 +339,9 @@ func parseService(ps *protokit.ServiceDescriptor) *Service {
 	}
 
 	for _, sm := range ps.Methods {
-		service.Methods = append(service.Methods, parseServiceMethod(sm))
+		if !excluded(sm.GetComments().String()) {
+			service.Methods = append(service.Methods, parseServiceMethod(sm))
+		}
 	}
 
 	return service
@@ -375,13 +393,28 @@ func parseType(tc typeContainer) (string, string, string) {
 	return name, name, name
 }
 
-func description(comment string) string {
+func excluded(comment string) bool {
 	val := strings.TrimLeft(comment, "*/\n ")
 	if strings.HasPrefix(val, "@exclude") {
-		return ""
+		return true
 	}
 
-	return val
+	return false
+}
+
+func description(comment string) string {
+	// only use comments stating with /// or /**
+	// since the comment has already been removed we just have to check
+	// that the comment string starts with either / or *
+	if strings.HasPrefix(comment, "/") || strings.HasPrefix(comment, "*") {
+		val := strings.TrimLeft(comment, "*/\n ")
+		if strings.HasPrefix(val, "@exclude") {
+			return ""
+		}
+
+		return val
+	}
+	return ""
 }
 
 type orderedEnums []*Enum

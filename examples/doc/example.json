@@ -125,14 +125,45 @@
           ]
         },
         {
-          "name": "EmptyBookingMessage",
-          "longName": "EmptyBookingMessage",
-          "fullName": "com.example.EmptyBookingMessage",
-          "description": "An empty message for testing",
+          "name": "NoCommentMessage",
+          "longName": "NoCommentMessage",
+          "fullName": "com.example.NoCommentMessage",
+          "description": "",
           "hasExtensions": false,
-          "hasFields": false,
+          "hasFields": true,
           "extensions": [],
-          "fields": []
+          "fields": [
+            {
+              "name": "payment_received",
+              "description": "commented",
+              "label": "",
+              "type": "bool",
+              "longType": "bool",
+              "fullType": "bool",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "payment_sent",
+              "description": "",
+              "label": "",
+              "type": "bool",
+              "longType": "bool",
+              "fullType": "bool",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "payment_accepted",
+              "description": "shown",
+              "label": "",
+              "type": "bool",
+              "longType": "bool",
+              "fullType": "bool",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
         }
       ],
       "services": [

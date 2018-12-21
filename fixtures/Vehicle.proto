@@ -14,7 +14,7 @@ service VehicleService {
   // Returns the set of models.
   rpc GetModels(EmptyMessage) returns (stream Model);
 
-  rpc AddModels(stream Model) returns (stream Model); // creates models
+  rpc AddModels(stream Model) returns (stream Model); /// creates models
 
   /**
    * Looks up a vehicle by id.
@@ -48,7 +48,7 @@ message EmptyMessage {
 }
 
 /**
- * @exclude
+ * @excluded
  * This comment won't be rendered
  */
 message ExcludedMessage {
@@ -56,6 +56,28 @@ message ExcludedMessage {
   string name = 2; // @exclude the name of this message
 
   /* @exclude the value of this message. */
+  int32 value = 3;
+}
+
+/**
+ * This comment will be rendered
+ */
+message ExcludedField {
+  string id   = 1; /// the id of this message.
+  string name = 2; /// @exclude the name of this message
+
+  /** @exclude the value of this message. */
+  int32 value = 3;
+}
+
+/*
+ * This comment will NOT be rendered
+ */
+message NonDocComment {
+  string id   = 1; /// the id of this message.
+  string name = 2; // the name of this message
+
+  /* the value of this message. */
   int32 value = 3;
 }
 
